@@ -1,1 +1,32 @@
-{% extends layout.html %}
+{% extends "layout.html" %}
+
+{% block title %}
+chat area
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <header>
+            chat info bar
+        </header>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            chat navigation area
+        </div>
+        <div class="col-8">
+            chat area
+        </div>
+    </div>
+
+    <div class="row">
+        <footer>
+            chat interaction bar
+        </footer>
+    </div>
+</div>
+{% endblock %}
