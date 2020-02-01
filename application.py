@@ -1,12 +1,14 @@
 import os
 
-from flask import Flask, render_template, redirect,request
+from flask import Flask, render_template, redirect,request,flash
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
+
+active_user_list = [] # nicknames currently active and taken
 
 @app.route("/")
 def index():
@@ -28,7 +30,10 @@ def login():
     # TODO: add session handling for returning client
     return render_template("landing_page.html")
 
-#   @socketio.on()
+  @socketio.on('nickname requested')
+  def username_comparison(data):
+      if data['nickname'] in active_user_list:
+          flash("sorry, nickname already taken!")
 
 if __name__ == "__main__":
     app.debug = True
