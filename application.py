@@ -28,6 +28,7 @@ def login():
     # TODO: add session handling for returning client
     return render_template("landing_page.html")
 
+#   @socketio.on()
 
 if __name__ == "__main__":
     app.debug = True

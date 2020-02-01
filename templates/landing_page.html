@@ -5,11 +5,11 @@ Hello!
 {% endblock %}
 
 {% block body %}
-<form class="form-signin" action="post">
+<form class="form-signin" action="post" id='nickname_form'>
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputNickname">Select nickname</label>
-    <input type="username" id="inputNickname" class="form-control" placeholder="floops" required autofocus>
+    <input type="username" id="inputNickname" class="form-control" placeholder="maybe floops?" required autofocus>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>
 {% endblock %}
