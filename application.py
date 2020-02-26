@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, redirect,request,flash
+from flask import Flask, render_template, redirect,request,flash,url_for
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 
-active_user_list = [] # nicknames currently active and taken
+active_user_list = ['momo'] # nicknames currently active and taken
 
 @app.route("/")
 def index():
@@ -26,16 +26,22 @@ def login():
     """
     if request.method == "POST":
         user_to_register = request.form.get("username")
-        # TODO: verify that username isn't taken
-    # TODO: add session handling for returning client
+        if user_to_register in active_user_list:
+            flash("sorry, nickname already taken!")
+        else:
+            active_user_list.append(user_to_register)
+            redirect(url_for('login'))
+            # TODO: set session for user (?)
     return render_template("landing_page.html")
+
+
 
 @socketio.on('nickname requested')
 def username_comparison(data):
     if data['nickname'] in active_user_list:
         flash("sorry, nickname already taken!")
-    else:
-        render_template("chat_selection_page.html" , rooms = [])
+    # else:
+    #     render_template("chat_selection_page.html" , rooms = [])
 
 if __name__ == "__main__":
     app.debug = True
