@@ -4,6 +4,11 @@
 chat area
 {% endblock %}
 
+{% block head_elements %}
+
+{% endblock %}
+<script src="/static/chatroom.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/style_chatroom.css">
 {% block body %}
 
 
@@ -23,10 +28,13 @@ chat area
         </div>
     </div>
 
-    <div class="row">
         <footer>
-            chat interaction bar
+            <nav class="navbar navbar-dark bg-dark">
+                <form class="form-inline">
+                    <button class="btn btn-outline-success" type="button">Main button</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button>
+                </form>
+            </nav>
         </footer>
     </div>
-</div>
 {% endblock %}
