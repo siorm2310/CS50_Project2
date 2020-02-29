@@ -30,11 +30,13 @@ def login():
             flash("sorry, nickname already taken!")
         else:
             active_user_list.append(user_to_register)
-            redirect(url_for('login'))
+            redirect(url_for('chat_selection'))
             # TODO: set session for user (?)
     return render_template("landing_page.html")
 
-
+@app.route("/select_chat", methods = ["POST","GET"])
+def chat_selection():
+    pass
 
 @socketio.on('nickname requested')
 def username_comparison(data):
