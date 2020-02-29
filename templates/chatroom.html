@@ -1,40 +1,59 @@
 {% extends "layout.html" %}
-
-{% block title %}
-chat area
-{% endblock %}
+{% block title %} chat area {% endblock %}
 
 {% block head_elements %}
-
-{% endblock %}
 <script src="/static/chatroom.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/style_chatroom.css">
+<link rel="stylesheet" type="text/css" href="/static/style_chatroom.css" />
+{% endblock %}
+
 {% block body %}
 
-
 <div class="container-fluid">
-    <div class="row">
-        <header>
-            chat info bar
-        </header>
-    </div>
+  <div class="row">
+    <header>
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+          <!-- <img src="/docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
+          Flack
+        </a>
+      </nav>
+    </header>
+  </div>
 
-    <div class="row">
-        <div class="col-4">
-            chat navigation area
-        </div>
-        <div class="col-8">
-            chat area
-        </div>
+  <div class="row">
+    <div class="col-2">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
     </div>
+    <div class="col-10">
+      <div class="card">
+        <div class="card-body" id = "chatArea">
+          This is some text within a card body.
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <footer>
-            <nav class="navbar navbar-dark bg-dark">
-                <form class="form-inline">
-                    <button class="btn btn-outline-success" type="button">Main button</button>
-                    <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button>
-                </form>
-            </nav>
-        </footer>
-    </div>
+  <footer>
+    <nav class="navbar navbar-dark bg-dark">
+      <form class="form-inline">
+        <button class="btn btn-outline-success" type="button">
+          Footer navbar controls
+        </button>
+      </form>
+    </nav>
+  </footer>
+</div>
 {% endblock %}
