@@ -11,8 +11,10 @@ Chatroom selection
 <h2>Choose one of the available chat rooms:</h2>
 <br>
 <div class="list-group">
-    {{ for room in rooms }}
-    <a href="#" class="list-group-item list-group-item-action">{% room.name %}</a>
-    {{ endfor }}
+    {% if rooms %}
+      {% for room in rooms %}
+    <a href="#" class="list-group-item list-group-item-action">{{ room.name }}</a>
+      {% endfor %}
+    {% endif %}
   </div>
 {% endblock %}

@@ -1,13 +1,15 @@
 import os
 
-from flask import Flask, render_template, redirect,request,flash,url_for
+from flask import Flask, render_template, redirect,request,flash,url_for,session
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+# app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config["SECRET_KEY"] = 'wow'
+
 socketio = SocketIO(app)
 
-
+# TODO: remove user that logged out
 active_user_list = ['momo'] # nicknames currently active and taken
 
 @app.route("/")
@@ -28,23 +30,18 @@ def login():
         user_to_register = request.form.get("username")
         if user_to_register in active_user_list:
             flash("sorry, nickname already taken!")
+            return redirect(url_for('login'))
         else:
             active_user_list.append(user_to_register)
-            redirect(url_for('chat_selection'))
-            # TODO: set session for user (?)
+            session['username'] = user_to_register
+            return redirect(url_for('chat_selection'))
     return render_template("landing_page.html")
 
 @app.route("/select_chat", methods = ["POST","GET"])
 def chat_selection():
-    pass
-
-@socketio.on('nickname requested')
-def username_comparison(data):
-    if data['nickname'] in active_user_list:
-        flash("sorry, nickname already taken!")
-    # else:
-    #     render_template("chat_selection_page.html" , rooms = [])
+    return render_template("chat_selection_page.html", rooms = [])
 
 if __name__ == "__main__":
     app.debug = True
+    app.env = 'development'
     app.run()
