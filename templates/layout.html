@@ -13,15 +13,17 @@
 </head>
 
 <body>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-warning" role="alert">
-            {{message}}
-          </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+  
+  {% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+  <div class="alert alert-warning" role="alert">
+    {{message}}
+  </div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
     {% block body %}
     {% endblock %}
 </body>
