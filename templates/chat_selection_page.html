@@ -16,5 +16,39 @@ Chatroom selection
     <a href="#" class="list-group-item list-group-item-action">{{ room.name }}</a>
       {% endfor %}
     {% endif %}
+</div>
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#chatCreationModal">Create new chatroom</button>
+
+<!-- Modal -->
+<div class="modal fade" id="chatCreationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatCreationModalTitle">Creation Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          <div class="form-group">
+            <label for="newChatName">Choose your chatroom's name:</label>
+            <input type="text" class="form-control" id="newChatName" aria-describedby="nameHelp" placeholder="Maybe 'Pets and People'">
+          </div>
+          <div class="form-group">
+            <label for="newChatDisc">Enter a short description of the chat's theme:</label>
+            <textarea class="form-control" id="newChatDisc" rows="3" aria-describedby="nameHelp" placeholder="This chat is for the pet lovers out there..."></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
   </div>
+</div>
+
 {% endblock %}

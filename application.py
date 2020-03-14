@@ -1,7 +1,6 @@
-import os
-
 from flask import Flask, render_template, redirect,request,flash,url_for,session
 from flask_socketio import SocketIO, emit
+import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
