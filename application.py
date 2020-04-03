@@ -11,9 +11,8 @@ socketio = SocketIO(app)
 # TODO: remove user that logged out
 # Global variables
 active_user_list = ['momo']  # nicknames currently active and taken
-active_chatrooms = []
+active_chatrooms = {}
 messages = []  # TODO: maybe should be a dict?
-
 @app.route("/")
 def index():
     """
@@ -41,7 +40,14 @@ def login():
 
 @app.route("/select_chat", methods=["POST","GET"])
 def chat_selection():
-    return render_template("chat_selection_page.html", rooms=active_chatrooms)
+    if request.method == "POST": # user clicked "Create new chatroom"
+        print('got creation reuqest')
+        new_chatroom_name = request.form.get("newChatName")
+        new_chatroom_disc = request.form.get("newChatDisc")
+        active_chatrooms[new_chatroom_name] = new_chatroom_disc
+        print(active_chatrooms)
+        print(f"Number of active rooms : {active_chatrooms.__len__()}")
+    return render_template("chat_selection_page.html", rooms = active_chatrooms)
 
 @socketio.on("submit message")
 def vote(data):
