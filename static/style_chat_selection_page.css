@@ -1,0 +1,9 @@
+#card_container{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.card {
+    margin: 20%;
+}

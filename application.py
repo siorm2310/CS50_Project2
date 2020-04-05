@@ -8,11 +8,12 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 socketio = SocketIO(app)
 
-# TODO: remove user that logged out
+# TODO: remove user that has logged out
 # Global variables
 active_user_list = ['momo']  # nicknames currently active and taken
-active_chatrooms = {}
-messages = []  # TODO: maybe should be a dict?
+active_chatrooms = {"rooms": [{"name" : "TestRoom1", 
+                                "disc" : "BlaBlaBla",
+                                "messages" : {"author" : "user", "content": "wow", "time_stamp" : "now"}}]}
 @app.route("/")
 def index():
     """
@@ -44,10 +45,25 @@ def chat_selection():
         print('got creation reuqest')
         new_chatroom_name = request.form.get("newChatName")
         new_chatroom_disc = request.form.get("newChatDisc")
-        active_chatrooms[new_chatroom_name] = new_chatroom_disc
-        print(active_chatrooms)
-        print(f"Number of active rooms : {active_chatrooms.__len__()}")
-    return render_template("chat_selection_page.html", rooms = active_chatrooms)
+        active_chatrooms["rooms"].append({"name" : new_chatroom_name , "disc" : new_chatroom_disc})
+        return(redirect(url_for('display_chat', chat_name = new_chatroom_name)))
+    
+    return render_template("chat_selection_page.html", rooms = active_chatrooms["rooms"])
+
+@app.route('/room/<string:chat_name>', methods=["POST","GET"])
+def display_chat(chat_name):
+    try:
+        for room in active_chatrooms["rooms"]:
+            if chat_name in room["name"]:
+                # return render_template("chatroom.html", messages = messages, users = users)
+                print("Found the room")
+                return redirect(url_for("index"))
+            raise KeyError
+    except KeyError:
+        print("Room was not found")
+        flash("Room was not found")
+        return redirect(url_for("chat_selection"))
+
 
 @socketio.on("submit message")
 def vote(data):

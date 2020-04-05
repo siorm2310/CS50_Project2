@@ -5,20 +5,31 @@ Chatroom selection
 {% endblock %}
 
 {% block head_elements %}
-
+<link rel="stylesheet" type="text/css" href="/static/style_chat_selection_page.css">
 {% endblock %}
 {% block body %}
+
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#chatCreationModal">Create new chatroom</button>
 <h2>Choose one of the available chat rooms:</h2>
 <br>
-<div class="list-group">
+<div class="container" id = "card_container">
+<div class="row">
     {% if rooms %}
       {% for room in rooms %}
-    <a href="#" class="list-group-item list-group-item-action">{{ room.name }}</a>
+      <div class="col">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{ room.name }}</h5>
+            <p class="card-text">{{ room.disc }}</p>
+            <a href="{{url_for('display_chat' , chat_name = room.name)}}" class="btn btn-primary">Enter {{room.name}}</a>
+          </div>
+        </div>
+      </div>
       {% endfor %}
     {% endif %}
 </div>
+</div>
 
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#chatCreationModal">Create new chatroom</button>
 
 <!-- Modal -->
 <div class="modal fade" id="chatCreationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
