@@ -55,13 +55,11 @@ def display_chat(chat_name):
     try:
         for room in active_chatrooms["rooms"]:
             if chat_name in room["name"]:
-                # return render_template("chatroom.html", messages = messages, users = users)
-                print("Found the room")
-                return redirect(url_for("index"))
-            raise KeyError
-    except KeyError:
-        print("Room was not found")
-        flash("Room was not found")
+                return render_template("chatroom.html", room = room)
+        raise KeyError("Room was not found in active_chatrooms")
+    except KeyError as err:
+        print(err)
+        flash("Room was not found. Choose one of available rooms")
         return redirect(url_for("chat_selection"))
 
 
