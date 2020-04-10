@@ -1,25 +1,17 @@
-{% extends "layout.html" %}
-{% block title %} chat area {% endblock %}
-
-{% block head_elements %}
+{% extends "layout.html" %} {% block title %} chat area {% endblock %} {% block
+head_elements %}
 <script src="/static/chatroom.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/style_chatroom.css" />
-
-<script type=text/javascript>
-  const room = JSON.parse('{{room|tojson}}');
-</script>
-{% endblock %}
-
-{% block body %}
+{% endblock %} {% block body %}
 
 <div class="container-fluid">
   <div class="row">
     <header>
       <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
-          <!-- <img src="/docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
           Flack
         </a>
+        <small>connected as {{user}}</small>
       </nav>
     </header>
   </div>
@@ -37,31 +29,45 @@
           <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          <a
+            class="nav-link disabled"
+            href="#"
+            tabindex="-1"
+            aria-disabled="true"
+            >Disabled</a
+          >
         </li>
       </ul>
     </div>
 
     <div class="col-10" id="chat_area">
-      {% if room.messages %}
-        {% for message in room.messages %}
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{message.author}} says:</h5>
-            {{message.body}}
-          </div>
-        <p class="card-text"><small class="text-muted">from {{message.time_stamp}}</small></p>
+      {% if room.messages %} {% for message in room.messages %}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{message.author}} says:</h5>
+          {{message.body}}
         </div>
-        {% endfor %}
-      {% endif %}
+        <p class="card-text">
+          <small class="text-muted">from {{message.time_stamp}}</small>
+        </p>
+      </div>
+      {% endfor %} {% endif %}
     </div>
-</div>
+  </div>
 
   <footer>
     <nav class="navbar">
       <form class="form-inline">
-        <button class="btn btn-outline-success" type="button" id="send_message">Send message</button>
-        <input class="form-control" type="text" placeholder="Type here your message" aria-label="text" id="msg_box">
+        <button class="btn btn-outline-success" type="button" id="send_message">
+          Send message
+        </button>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Type here your message"
+          aria-label="text"
+          id="msg_box"
+        />
       </form>
     </nav>
   </footer>

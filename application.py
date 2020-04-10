@@ -76,7 +76,9 @@ def display_chat(room_name):
         for room in active_chatrooms["rooms"]:
             if room_name in room["name"]:
                 session["current_room"] = room_name
-                return render_template("chatroom.html", room=room)
+                return render_template(
+                    "chatroom.html", room=room, user=session["username"]
+                )
         raise KeyError("Room was not found in active_chatrooms")
     except KeyError as err:
         print(err)
@@ -96,7 +98,7 @@ def insert_message(message):
     }
     index = find_room(room_name)
     active_chatrooms["rooms"][index]["messages"].append(new_message)
-    emit("all messages", new_message, broadcast=True)
+    emit("add messages", new_message, broadcast=True)
 
 
 if __name__ == "__main__":
