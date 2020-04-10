@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, request, flash, url_for, session 
+from flask import Flask, render_template, redirect, request, flash, url_for, session
 
 from flask_socketio import SocketIO, emit
-import os
+import os, datetime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
@@ -10,10 +10,25 @@ socketio = SocketIO(app)
 
 # TODO: remove user that has logged out
 # Global variables
-active_user_list = ['momo']  # nicknames currently active and taken
-active_chatrooms = {"rooms": [{"name" : "TestRoom1", 
-                                "disc" : "BlaBlaBla",
-                                "messages" : {"author" : "user", "content": "wow", "time_stamp" : "now"}}]}
+active_user_list = ["momo"]  # nicknames currently active and taken
+active_chatrooms = {
+    "rooms": [
+        {
+            "name": "TestRoom1",
+            "disc": "BlaBlaBla",
+            "messages": [{"author": "user", "body": "wow", "time_stamp": "now"},],
+        }
+    ]
+}
+
+
+def find_room(room_name):
+    for index, room in enumerate(active_chatrooms["rooms"]):
+        if room_name in room["name"]:
+            return index
+    return None
+
+
 @app.route("/")
 def index():
     """
@@ -22,7 +37,8 @@ def index():
     """
     return render_template("chatroom.html")
 
-@app.route("/login", methods=["POST","GET"])
+
+@app.route("/login", methods=["POST", "GET"])
 def login():
     """
     Login route. if the user hasn't initiated a session, the login "landing page" will be displayed,
@@ -32,44 +48,58 @@ def login():
         user_to_register = request.form.get("username")
         if user_to_register in active_user_list:
             flash("sorry, nickname already taken!")
-            return redirect(url_for('login'))
+            return redirect(url_for("login"))
         else:
             active_user_list.append(user_to_register)
-            session['username'] = user_to_register
-            return redirect(url_for('chat_selection'))
+            session["username"] = user_to_register
+            return redirect(url_for("chat_selection"))
     return render_template("landing_page.html")
 
-@app.route("/select_chat", methods=["POST","GET"])
+
+@app.route("/select_chat", methods=["POST", "GET"])
 def chat_selection():
-    if request.method == "POST": # user clicked "Create new chatroom"
-        print('got creation reuqest')
+    if request.method == "POST":  # user clicked "Create new chatroom"
+        print("got creation reuqest")
         new_chatroom_name = request.form.get("newChatName")
         new_chatroom_disc = request.form.get("newChatDisc")
-        active_chatrooms["rooms"].append({"name" : new_chatroom_name , "disc" : new_chatroom_disc})
-        return(redirect(url_for('display_chat', chat_name = new_chatroom_name)))
-    
-    return render_template("chat_selection_page.html", rooms = active_chatrooms["rooms"])
+        active_chatrooms["rooms"].append(
+            {"name": new_chatroom_name, "disc": new_chatroom_disc, "messages": {}}
+        )
+        return redirect(url_for("display_chat", chat_name=new_chatroom_name))
 
-@app.route('/room/<string:chat_name>', methods=["POST","GET"])
-def display_chat(chat_name):
+    return render_template("chat_selection_page.html", rooms=active_chatrooms["rooms"])
+
+
+@app.route("/room/<string:room_name>", methods=["POST", "GET"])
+def display_chat(room_name):
     try:
         for room in active_chatrooms["rooms"]:
-            if chat_name in room["name"]:
-                return render_template("chatroom.html", room = room)
+            if room_name in room["name"]:
+                session["current_room"] = room_name
+                return render_template("chatroom.html", room=room)
         raise KeyError("Room was not found in active_chatrooms")
     except KeyError as err:
         print(err)
-        flash("Room was not found. Choose one of available rooms")
+        flash("Room was not found. Please choose one of available rooms")
         return redirect(url_for("chat_selection"))
 
 
 @socketio.on("submit message")
-def vote(data):
-    selection = data["selection"]
-    # TODO: add message to global variables
-    emit("all messages", messages, broadcast=True)
+def insert_message(message):
+    room_name = session["current_room"]
+    author = session["username"]
+    time_stamp = str(datetime.datetime.now())
+    new_message = {
+        "author": author,
+        "body": message["message"],
+        "time_stamp": time_stamp,
+    }
+    index = find_room(room_name)
+    active_chatrooms["rooms"][index]["messages"].append(new_message)
+    emit("all messages", new_message, broadcast=True)
+
 
 if __name__ == "__main__":
     app.debug = True
-    app.env = 'development'
+    app.env = "development"
     app.run()

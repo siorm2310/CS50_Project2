@@ -4,6 +4,10 @@
 {% block head_elements %}
 <script src="/static/chatroom.js"></script>
 <link rel="stylesheet" type="text/css" href="/static/style_chatroom.css" />
+
+<script type=text/javascript>
+  const room = JSON.parse('{{room|tojson}}');
+</script>
 {% endblock %}
 
 {% block body %}
@@ -37,21 +41,27 @@
         </li>
       </ul>
     </div>
-    <div class="col-10">
-      <div class="card">
-        <div class="card-body" id = "chatArea">
-          This is some text within a card body.
+
+    <div class="col-10" id="chat_area">
+      {% if room.messages %}
+        {% for message in room.messages %}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{message.author}} says:</h5>
+            {{message.body}}
+          </div>
+        <p class="card-text"><small class="text-muted">from {{message.time_stamp}}</small></p>
         </div>
-      </div>
+        {% endfor %}
+      {% endif %}
     </div>
-  </div>
+</div>
 
   <footer>
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar">
       <form class="form-inline">
-        <button class="btn btn-outline-success" type="button">
-          Footer navbar controls
-        </button>
+        <button class="btn btn-outline-success" type="button" id="send_message">Send message</button>
+        <input class="form-control" type="text" placeholder="Type here your message" aria-label="text" id="msg_box">
       </form>
     </nav>
   </footer>
