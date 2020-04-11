@@ -1,43 +1,61 @@
-{% extends "layout.html" %}
-
-{% block title %}
-Chatroom selection
-{% endblock %}
-
+{% extends "layout.html" %} {% block title %} Chatroom selection {% endblock %}
 {% block head_elements %}
-<link rel="stylesheet" type="text/css" href="/static/style_chat_selection_page.css">
-{% endblock %}
-{% block body %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="/static/style_chat_selection_page.css"
+/>
+{% endblock %} {% block body %}
 
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#chatCreationModal">Create new chatroom</button>
 <h2>Choose one of the available chat rooms:</h2>
-<br>
-<div class="container" id = "card_container">
-<div class="row">
-    {% if rooms %}
-      {% for room in rooms %}
-      <div class="col">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{ room.name }}</h5>
-            <p class="card-text">{{ room.disc }}</p>
-            <a href="{{url_for('display_chat' , chat_name = room.name)}}" class="btn btn-primary">Enter {{room.name}}</a>
-          </div>
+<button
+  type="button"
+  class="btn btn-success"
+  data-toggle="modal"
+  data-target="#chatCreationModal"
+>
+  Create new chatroom
+</button>
+<br />
+<div class="container" id="card_container">
+  <div class="row">
+    {% if rooms %} {% for room in rooms %}
+    <div class="col">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ room.name }}</h5>
+          <p class="card-text">{{ room.disc }}</p>
+          <a
+            href="{{url_for('display_chat' , room_name = room.name)}}"
+            class="btn btn-primary"
+            >Enter {{room.name}}</a
+          >
         </div>
       </div>
-      {% endfor %}
-    {% endif %}
+    </div>
+    {% endfor %} {% endif %}
+  </div>
 </div>
-</div>
-
 
 <!-- Modal -->
-<div class="modal fade" id="chatCreationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div
+  class="modal fade"
+  id="chatCreationModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="chatCreationModalTitle">Creation Form</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -45,15 +63,31 @@ Chatroom selection
         <form action="" method="post">
           <div class="form-group">
             <label for="newChatName">Choose your chatroom's name:</label>
-            <input type="text" class="form-control" name="newChatName" aria-describedby="nameHelp" placeholder="Maybe 'Pets and People'">
+            <input
+              type="text"
+              class="form-control"
+              name="newChatName"
+              aria-describedby="nameHelp"
+              placeholder="Maybe 'Pets and People'"
+            />
           </div>
           <div class="form-group">
-            <label for="newChatDisc">Enter a short description of the chat's theme:</label>
-            <textarea class="form-control" name="newChatDisc" rows="3" aria-describedby="nameHelp" placeholder="This chat is for the pet lovers out there..."></textarea>
+            <label for="newChatDisc"
+              >Enter a short description of the chat's theme:</label
+            >
+            <textarea
+              class="form-control"
+              name="newChatDisc"
+              rows="3"
+              aria-describedby="nameHelp"
+              placeholder="This chat is for the pet lovers out there..."
+            ></textarea>
           </div>
-          <hr>
+          <hr />
           <button type="submit" class="btn btn-primary">Create</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
         </form>
       </div>
     </div>

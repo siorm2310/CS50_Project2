@@ -7,35 +7,34 @@ head_elements %}
 <div class="container-fluid">
   <div class="row">
     <header>
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-          Flack
-        </a>
-        <small>connected as {{user}}</small>
-      </nav>
+      <h1>Flack</h1>
+      <h4>{{room.name}}</h4>
+      <h6>connected as {{user}}</h6>
     </header>
   </div>
-
+  <hr />
   <div class="row">
     <div class="col-2">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
+          <a
+            class="btn btn-outline-secondary"
+            href="{{url_for('chat_selection')}}"
+            >Return to room selection</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="btn btn-outline-secondary" href="{{url_for('logout')}}"
+            >Logout
+          </a>
         </li>
         <li class="nav-item">
           <a
-            class="nav-link disabled"
-            href="#"
-            tabindex="-1"
-            aria-disabled="true"
-            >Disabled</a
+            class="btn btn-outline-info"
+            href="{{url_for('get_messages', room_name = room.name)}}"
           >
+            export messages
+          </a>
         </li>
       </ul>
     </div>

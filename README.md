@@ -1,18 +1,19 @@
 # Project 2 in CS50's web development- Flack
 
-One Paragraph of project description goes here
+Project 2 focuses on JavaScript implementation and full duplex communication
+into a Flask application.
 
-## Getting Started
+Flack is a Slack clone, allowing users to create and take part in chatrooms,
+send messages and get messages in real time
+
+## Features
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+### Dependencies
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+This project utilizes the _Flask_ and _Flask-socketIO_ on server side,
+**Bootstrap 4**, both .css and .js on client side.
 
 ### Installing
 
@@ -58,26 +59,14 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+- [Maven](https://maven.apache.org/) - Dependency Management
+- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+- **Sior Meir** - Sole contributer
